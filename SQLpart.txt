@@ -8,7 +8,6 @@ DROP TABLE IF EXISTS young_animals;
 DROP TABLE IF EXISTS horses_and_donkeys;
 DROP TABLE IF EXISTS all_animals;
 
--- Создание таблиц
 CREATE TABLE dogs (
     id INTEGER PRIMARY KEY,
     name TEXT,
@@ -51,7 +50,6 @@ CREATE TABLE donkeys (
     commands TEXT
 );
 
--- Заполнение таблиц
 INSERT INTO dogs (name, birth_date, commands) VALUES ('Dog1', '2020-01-01', 'Sit,Stay');
 INSERT INTO cats (name, birth_date, commands) VALUES ('Cat1', '2019-05-10', 'Meow');
 INSERT INTO hamsters (name, birth_date, commands) VALUES ('Hamster1', '2022-02-15', 'Run');
@@ -59,16 +57,13 @@ INSERT INTO horses (name, birth_date, commands) VALUES ('Horse1', '2018-11-20', 
 INSERT INTO camels (name, birth_date, commands) VALUES ('Camel1', '2021-07-08', 'Carry');
 INSERT INTO donkeys (name, birth_date, commands) VALUES ('Donkey1', '2020-03-25', 'Bray');
 
--- Удаление таблицы верблюдов
 DROP TABLE camels;
 
--- Объединение таблиц лошадей и ослов
 CREATE TABLE horses_and_donkeys AS
 SELECT * FROM horses
 UNION ALL
 SELECT * FROM donkeys;
 
--- Создание новой таблицы "молодые животные"
 CREATE TABLE young_animals AS
 SELECT *, TIMESTAMPDIFF(MONTH, birth_date, CURDATE()) AS age_in_months
 FROM (
@@ -82,7 +77,6 @@ FROM (
 ) AS all_animals
 WHERE birth_date >= CURDATE() - INTERVAL 3 YEAR AND birth_date <= CURDATE() - INTERVAL 1 YEAR;
 
--- Объединение всех таблиц в одну
 CREATE TABLE all_animals AS
 SELECT *, 'dogs' AS source_table FROM dogs
 UNION ALL
